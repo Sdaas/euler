@@ -8,7 +8,30 @@
 ;
 ; Find the sum of all the multiples of 3 or 5 below N
 
+; The sum of all multiples of m less than n is given by
+; sum(k= 1 to L)(m*k)
+; where L is the number of multiples less than n. i.e., L = n div m
+; which reduces to m.(L)(L+1)/2
+(defn solve
+	[m n]
+	(let [
+		nn  (dec n)
+		ell	(quot nn m)
+		]
+		(/ (* m (* ell (inc ell))) 2)))
+
 (defn sum-of-multiples
+	"Sum of all multiples of 3 and 5 below n"
+	[n]
+	(let [
+		sum-3x  (solve 3 n)
+		sum-5x  (solve 5 n)
+		sum-15x (solve 15 n)
+		]
+		(- (+ sum-3x sum-5x) sum-15x)))
+
+; O(N) solution ...
+(defn slow-sum-of-multiples
 	"Sum of all multiples of 3 and 5 below n"
 	[n]
 	(let [
@@ -17,8 +40,8 @@
 		]
 		(reduce + multiples)))
 
-; The slower approach. Turns out that this is 3x slower than sum-of-multiples
-(defn slow-sum-of-multiples
+; Also O(N) solution. Turns out that this is 3x slower than sum-of-multiples
+(defn slower-sum-of-multiples
 	"Sum of all multiples of 3 and 5 below n"
 	[n]
 	(let [
